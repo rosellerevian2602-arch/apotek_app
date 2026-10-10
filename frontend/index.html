@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dashboard — apotek_app</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <h1>💊 apotek_app</h1>
+    <a href="index.html">Dashboard</a>
+    <a href="supplier.html">Data Supplier</a>
+    <a href="obat.html">Data Obat</a>
+    <a href="pembelian.html">Pembelian</a>
+    <a href="pembayaran-utang.html">Pembayaran Utang</a>
+    <a href="riwayat-pembelian.html">Riwayat Pembelian</a>
+  </aside>
+
+  <main class="main">
+    <div class="topbar"><h2>Dashboard</h2></div>
+
+    <div class="card-grid">
+      <div class="stat-card">
+        <div class="label">Total Supplier</div>
+        <div class="value" id="stat-supplier">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Total Obat</div>
+        <div class="value" id="stat-obat">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Pembelian Final</div>
+        <div class="value" id="stat-pembelian">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Total Utang Belum Lunas</div>
+        <div class="value" id="stat-utang">—</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Ringkasan Sistem</h3>
+      <p class="text-muted">
+        Sistem Pembelian Obat & Pengelolaan Utang Supplier pada Apotek.<br>
+        Fitur: CRUD Supplier, CRUD Obat, Transaksi Pembelian (tunai/kredit),
+        dan Pembayaran Utang bertahap.
+      </p>
+      <div class="divider"></div>
+      <div class="flex flex-wrap">
+        <a href="supplier.html" class="btn btn-primary">Kelola Supplier</a>
+        <a href="obat.html" class="btn btn-secondary">Kelola Obat</a>
+        <a href="pembelian.html" class="btn btn-secondary">Transaksi Pembelian</a>
+        <a href="pembayaran-utang.html" class="btn btn-secondary">Bayar Utang</a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script type="module">
+  import { supabase, rupiah, setActiveMenu } from "./js/supabaseClient.js";
+  setActiveMenu();
+
+  async function load() {
+    const [{ count: cSup }, { count: cObt }, { count: cPem }, { data: utang }] = await Promise.all([
+      supabase.from("suppliers").select("*", { count: "exact", head: true }),
+      supabase.from("obats").select("*", { count: "exact", head: true }),
+      supabase.from("pembelian").select("*", { count: "exact", head: true }).eq("status_transaksi", "final"),
+      supabase.from("pembelian").select("sisa_utang")
+        .eq("metode_pembayaran", "kredit").eq("status_transaksi", "final"),
+    ]);
+    const totalUtang = (utang || []).reduce((a, b) => a + Number(b.sisa_utang || 0), 0);
+    document.getElementById("stat-supplier").textContent  = cSup ?? 0;
+    document.getElementById("stat-obat").textContent      = cObt ?? 0;
+    document.getElementById("stat-pembelian").textContent = cPem ?? 0;
+    document.getElementById("stat-utang").textContent     = rupiah(totalUtang);
+  }
+  load();
+</script>
+</body>
+</html>

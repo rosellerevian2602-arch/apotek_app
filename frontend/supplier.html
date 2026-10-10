@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Data Supplier — apotek_app</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <h1>💊 apotek_app</h1>
+    <a href="index.html">Dashboard</a>
+    <a href="supplier.html">Data Supplier</a>
+    <a href="obat.html">Data Obat</a>
+    <a href="pembelian.html">Pembelian</a>
+    <a href="pembayaran-utang.html">Pembayaran Utang</a>
+    <a href="riwayat-pembelian.html">Riwayat Pembelian</a>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <h2>Data Supplier</h2>
+      <button class="btn btn-primary" onclick="openForm()">+ Tambah Supplier</button>
+    </div>
+
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Kode</th>
+              <th>Nama Supplier</th>
+              <th>Alamat</th>
+              <th>Telepon</th>
+              <th class="text-right">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            <tr><td colspan="5" class="loading"><div class="spinner"></div>Memuat data…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Modal Form -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="modal-title">Tambah Supplier</h3>
+      <button class="modal-close" onclick="closeForm()">×</button>
+    </div>
+    <form id="form" onsubmit="submitForm(event)">
+      <input type="hidden" id="id_supplier" />
+      <div class="form-group">
+        <label>Kode Supplier *</label>
+        <input id="kode_supplier" required placeholder="cth: SUP001" />
+      </div>
+      <div class="form-group">
+        <label>Nama Supplier *</label>
+        <input id="nama_supplier" required placeholder="cth: PT Kimia Farma" />
+      </div>
+      <div class="form-group">
+        <label>Alamat</label>
+        <textarea id="alamat" placeholder="Alamat lengkap supplier"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Telepon</label>
+        <input id="telepon" placeholder="cth: 0812-3456-7890" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeForm()">Batal</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script type="module" src="js/supplier.js"></script>
+</body>
+</html>

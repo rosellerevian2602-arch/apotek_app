@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pembelian — apotek_app</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <h1>💊 apotek_app</h1>
+    <a href="index.html">Dashboard</a>
+    <a href="supplier.html">Data Supplier</a>
+    <a href="obat.html">Data Obat</a>
+    <a href="pembelian.html">Pembelian</a>
+    <a href="pembayaran-utang.html">Pembayaran Utang</a>
+    <a href="riwayat-pembelian.html">Riwayat Pembelian</a>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <h2>Transaksi Pembelian</h2>
+      <button class="btn btn-primary" onclick="openForm()">+ Transaksi Baru</button>
+    </div>
+
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>No. Pembelian</th>
+              <th>Tanggal</th>
+              <th>Supplier</th>
+              <th>Metode</th>
+              <th class="text-right">Total</th>
+              <th class="text-right">Dibayar</th>
+              <th class="text-right">Sisa Utang</th>
+              <th>Status Utang</th>
+              <th>Status</th>
+              <th class="text-right">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            <tr><td colspan="10" class="loading"><div class="spinner"></div>Memuat…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Modal Transaksi -->
+<div class="modal" id="modal">
+  <div class="modal-content wide">
+    <div class="modal-header">
+      <h3 id="modal-title">Transaksi Pembelian Baru</h3>
+      <button class="modal-close" onclick="closeForm()">×</button>
+    </div>
+    <form id="form" onsubmit="submitForm(event)">
+      <input type="hidden" id="id_pembelian" />
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nomor Pembelian *</label>
+          <input id="nomor_pembelian" required placeholder="cth: PB-20250101-001" />
+        </div>
+        <div class="form-group">
+          <label>Tanggal Pembelian *</label>
+          <input id="tanggal_pembelian" type="date" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Supplier *</label>
+          <select id="id_supplier" required><option value="">— Pilih Supplier —</option></select>
+        </div>
+        <div class="form-group">
+          <label>Metode Pembayaran *</label>
+          <select id="metode_pembayaran" required onchange="toggleJatuhTempo()">
+            <option value="tunai">Tunai</option>
+            <option value="kredit">Kredit</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group" id="row-jatuh-tempo" style="display:none">
+        <label>Tanggal Jatuh Tempo *</label>
+        <input id="tanggal_jatuh_tempo" type="date" />
+      </div>
+
+      <div class="divider"></div>
+      <div class="flex-between mb-2">
+        <h3 style="font-size:15px">Rincian Obat</h3>
+        <button type="button" class="btn btn-sm btn-secondary" onclick="addItem()">+ Tambah Obat</button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="detail-table">
+          <thead>
+            <tr>
+              <th style="width:35%">Obat</th>
+              <th style="width:15%">Jumlah</th>
+              <th style="width:20%">Harga Beli</th>
+              <th style="width:20%" class="text-right">Subtotal</th>
+              <th style="width:10%"></th>
+            </tr>
+          </thead>
+          <tbody id="items"></tbody>
+          <tfoot>
+            <tr>
+              <th colspan="3" class="text-right">Total Pembelian</th>
+              <th class="text-right" id="grand-total">Rp 0</th>
+              <th></th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeForm()">Batal</button>
+        <button type="submit" class="btn btn-primary" id="btn-submit">Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Detail -->
+<div class="modal" id="modal-detail">
+  <div class="modal-content wide">
+    <div class="modal-header">
+      <h3>Detail Pembelian</h3>
+      <button class="modal-close" onclick="document.getElementById('modal-detail').classList.remove('show')">×</button>
+    </div>
+    <div id="detail-body"></div>
+  </div>
+</div>
+
+<script type="module" src="js/pembelian.js"></script>
+</body>
+</html>

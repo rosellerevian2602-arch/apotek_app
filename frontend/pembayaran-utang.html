@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pembayaran Utang — apotek_app</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <h1>💊 apotek_app</h1>
+    <a href="index.html">Dashboard</a>
+    <a href="supplier.html">Data Supplier</a>
+    <a href="obat.html">Data Obat</a>
+    <a href="pembelian.html">Pembelian</a>
+    <a href="pembayaran-utang.html">Pembayaran Utang</a>
+    <a href="riwayat-pembelian.html">Riwayat Pembelian</a>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <h2>Pembayaran Utang</h2>
+      <button class="btn btn-primary" onclick="openForm()">+ Catat Pembayaran</button>
+    </div>
+
+    <div class="card">
+      <h3>Daftar Pembelian Kredit Bersaldo</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>No. Pembelian</th>
+              <th>Supplier</th>
+              <th>Tanggal</th>
+              <th>Jatuh Tempo</th>
+              <th class="text-right">Total</th>
+              <th class="text-right">Dibayar</th>
+              <th class="text-right">Sisa Utang</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-utang">
+            <tr><td colspan="8" class="loading"><div class="spinner"></div>Memuat…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Riwayat Pembayaran</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>No. Pembelian</th>
+              <th>Supplier</th>
+              <th>Tanggal Bayar</th>
+              <th class="text-right">Nominal</th>
+              <th>Metode</th>
+              <th>Keterangan</th>
+              <th class="text-right">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-bayar">
+            <tr><td colspan="7" class="loading"><div class="spinner"></div>Memuat…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Modal Pembayaran -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Catat Pembayaran Utang</h3>
+      <button class="modal-close" onclick="closeForm()">×</button>
+    </div>
+    <form id="form" onsubmit="submitForm(event)">
+      <div class="form-group">
+        <label>Pembelian Kredit *</label>
+        <select id="id_pembelian" required onchange="onPilihPembelian()">
+          <option value="">— Pilih Pembelian —</option>
+        </select>
+      </div>
+
+      <div class="alert alert-info" id="info-utang" style="display:none"></div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Tanggal Pembayaran *</label>
+          <input id="tanggal_pembayaran" type="date" required />
+        </div>
+        <div class="form-group">
+          <label>Nominal Pembayaran *</label>
+          <input id="nominal_pembayaran" type="number" min="1" step="any" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Metode Pembayaran</label>
+        <input id="metode_pembayaran" placeholder="cth: Transfer BCA" />
+      </div>
+
+      <div class="form-group">
+        <label>Keterangan</label>
+        <textarea id="keterangan" placeholder="Catatan tambahan (opsional)"></textarea>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeForm()">Batal</button>
+        <button type="submit" class="btn btn-primary">Simpan Pembayaran</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script type="module" src="js/pembayaranUtang.js"></script>
+</body>
+</html>

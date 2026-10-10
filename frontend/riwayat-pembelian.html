@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Riwayat Pembelian — apotek_app</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <h1>💊 apotek_app</h1>
+    <a href="index.html">Dashboard</a>
+    <a href="supplier.html">Data Supplier</a>
+    <a href="obat.html">Data Obat</a>
+    <a href="pembelian.html">Pembelian</a>
+    <a href="pembayaran-utang.html">Pembayaran Utang</a>
+    <a href="riwayat-pembelian.html">Riwayat Pembelian</a>
+  </aside>
+
+  <main class="main">
+    <div class="topbar"><h2>Riwayat Pembelian</h2></div>
+
+    <div class="card">
+      <h3>Filter</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Dari Tanggal</label>
+          <input type="date" id="f-dari" onchange="loadData()" />
+        </div>
+        <div class="form-group">
+          <label>Sampai Tanggal</label>
+          <input type="date" id="f-sampai" onchange="loadData()" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Supplier</label>
+          <select id="f-supplier" onchange="loadData()">
+            <option value="">— Semua Supplier —</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Metode Pembayaran</label>
+          <select id="f-metode" onchange="loadData()">
+            <option value="">— Semua Metode —</option>
+            <option value="tunai">Tunai</option>
+            <option value="kredit">Kredit</option>
+          </select>
+        </div>
+      </div>
+      <div class="flex">
+        <button class="btn btn-secondary" onclick="resetFilter()">Reset Filter</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>No. Pembelian</th>
+              <th>Tanggal</th>
+              <th>Supplier</th>
+              <th>Metode</th>
+              <th>Jatuh Tempo</th>
+              <th class="text-right">Total</th>
+              <th class="text-right">Dibayar</th>
+              <th class="text-right">Sisa</th>
+              <th>Status Utang</th>
+              <th class="text-right">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            <tr><td colspan="10" class="loading"><div class="spinner"></div>Memuat…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="modal" id="modal-detail">
+  <div class="modal-content wide">
+    <div class="modal-header">
+      <h3>Detail Pembelian</h3>
+      <button class="modal-close" onclick="document.getElementById('modal-detail').classList.remove('show')">×</button>
+    </div>
+    <div id="detail-body"></div>
+  </div>
+</div>
+
+<script type="module" src="js/riwayatPembelian.js"></script>
+</body>
+</html>

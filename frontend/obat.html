@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Data Obat — apotek_app</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <h1>💊 apotek_app</h1>
+    <a href="index.html">Dashboard</a>
+    <a href="supplier.html">Data Supplier</a>
+    <a href="obat.html">Data Obat</a>
+    <a href="pembelian.html">Pembelian</a>
+    <a href="pembayaran-utang.html">Pembayaran Utang</a>
+    <a href="riwayat-pembelian.html">Riwayat Pembelian</a>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <h2>Data Obat</h2>
+      <button class="btn btn-primary" onclick="openForm()">+ Tambah Obat</button>
+    </div>
+
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Kode</th>
+              <th>Nama Obat</th>
+              <th>Kategori</th>
+              <th>Satuan</th>
+              <th class="text-right">Harga Beli Terakhir</th>
+              <th class="text-right">Stok</th>
+              <th class="text-right">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            <tr><td colspan="7" class="loading"><div class="spinner"></div>Memuat data…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="modal-title">Tambah Obat</h3>
+      <button class="modal-close" onclick="closeForm()">×</button>
+    </div>
+    <form id="form" onsubmit="submitForm(event)">
+      <input type="hidden" id="id_obat" />
+      <div class="form-row">
+        <div class="form-group">
+          <label>Kode Obat *</label>
+          <input id="kode_obat" required placeholder="cth: OBT001" />
+        </div>
+        <div class="form-group">
+          <label>Nama Obat *</label>
+          <input id="nama_obat" required placeholder="cth: Paracetamol" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Kategori</label>
+          <input id="kategori" placeholder="cth: Analgesik" />
+        </div>
+        <div class="form-group">
+          <label>Satuan</label>
+          <input id="satuan" placeholder="cth: Tablet" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Harga Beli Terakhir</label>
+          <input id="harga_beli_terakhir" type="number" min="0" step="any" value="0" />
+        </div>
+        <div class="form-group">
+          <label>Stok Awal</label>
+          <input id="stok" type="number" min="0" value="0" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeForm()">Batal</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script type="module" src="js/obat.js"></script>
+</body>
+</html>
